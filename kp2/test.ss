@@ -1,2 +1,0 @@
-(define (p?) (f? (f? 1 2) #t))
-(define(f? x? y?) #t)
