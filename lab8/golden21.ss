@@ -1,0 +1,65 @@
+;golden21
+(define a -5)(define b -3)
+(define (fun x)
+ (set! x (- x (/ 17 18)))
+  (+ (*(exp (- x)) (sin(+ x pi))) (cos x) (- .13e+0))
+)
+(define (golden-section-search a b)
+ (let(
+      (xmin(cond ((< a b)(golden-start a b)) (else (golden-start b a )) ))
+     )
+     (newline)
+     xmin
+ )
+)
+(define (golden-start a b)
+ (set! total-iterations 0)
+ (let(
+      (xa (+ a (* mphi(- b a))))
+      (xb (+ b (-(* mphi(- b a)))))
+     )
+     (try a b xa (fun xa) xb (fun xb))
+ )
+)
+(define mphi (* (- 3(sqrt 5))(/ 2.0e+0)))
+(define (try a b xa ya xb yb)
+ (cond (
+        (close-enough? a b)
+        (* (+ a b)0.5e+0)
+        ) ; first branch
+      (else (let() (display "+")
+             (set! total-iterations (+ total-iterations 1))
+             (cond((< ya yb) (let ()  (set! b xb)
+                         (set! xb xa)
+                         (set! yb ya)
+                         (set! xa (+ a (* mphi(- b a))))
+                         (try a b xa (fun xa) xb yb)
+                  ))
+                  (else  (set! a xa)
+                         (set! xa xb)
+                         (set! ya yb)
+                         (set! xb (- b (* mphi(- b a))))
+                         (try a b xa ya xb (fun xb))
+                   )
+             );cond...
+      );let...
+ );end second branch
+);cond ~ if...
+)
+(define (close-enough? x y)
+  (<(abs (- x y))tolerance))
+(define tolerance .1e-2)
+(define total-iterations 0)
+(define xmin 0)
+(set! xmin(golden-section-search a b))
+  (display"Interval=\t[")
+  (display a)
+  (display" , ")
+  (display b)
+  (display"]\n")
+  (display"Total number of iteranions=")
+total-iterations
+  (display"xmin=\t\t")
+xmin
+  (display"f(xmin)=\t")
+(fun xmin)
